@@ -17,7 +17,7 @@ $(document).ready(function() {
           let url = "https://fcc-weather-api.glitch.me/api/current?lat=" + latitude + "&lon=" + longitude;
           $.getJSON(url, function(data) {
             console.log(data);
-            weather = data.weather[0].description;
+            weather = data.weather[0].main;
             temperature = data.main.temp;
             humidity = data.main.humidity;
             city = data.name;
@@ -26,7 +26,7 @@ $(document).ready(function() {
             console.log("WEATHER: " + weather + ", TEMPERATURE: " + temperature + ", HUMIDITY: " + humidity);
 
             cityDisplay.textContent = city;
-            weatherDisplay.textContent = "WEATHER: " + weather + ", TEMPERATURE: " + temperature + ", HUMIDITY: " + humidity;
+            weatherDisplay.textContent = "WEATHER: " + weather + ", TEMPERATURE: " + temperature + "°C, HUMIDITY: " + humidity + "%";
             iconDisplay.setAttribute("src", iconUrl);
         });
       });
