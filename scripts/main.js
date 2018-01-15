@@ -2,6 +2,7 @@ $(document).ready(function() {
   const cityDisplay = document.getElementById("city-name");
   const weatherDisplay = document.getElementById("weather");
   const iconDisplay = document.getElementById("weather-icon");
+  const content = document.getElementById("content");
 
   let weather;
   let temperature;
@@ -25,6 +26,7 @@ $(document).ready(function() {
             console.log("You are currently in " + city);
             console.log("WEATHER: " + weather + ", TEMPERATURE: " + temperature + ", HUMIDITY: " + humidity);
 
+            content.classList.add("fadein");
             cityDisplay.textContent = city;
             weatherDisplay.textContent = "WEATHER: " + weather + ", TEMPERATURE: " + temperature + "°C, HUMIDITY: " + humidity + "%";
             iconDisplay.setAttribute("src", iconUrl);
@@ -36,3 +38,5 @@ $(document).ready(function() {
   }
 
 });
+
+
