@@ -3,12 +3,16 @@ $(document).ready(function() {
   const weatherDisplay = document.getElementById("weather");
   const iconDisplay = document.getElementById("weather-icon");
   const content = document.getElementById("content");
+  const fahrenheitToggle = document.getElementById("fahrenheit-toggle");
+  const fahrenheitText = document.getElementById("fahrenheit");
+  const celsiusText = document.getElementById("celsius");
 
   let weather;
   let temperature;
   let humidity;
   let city;
   let iconUrl;
+  let isFahrenheit = false;
 
   if ("geolocation" in navigator) {
       /* geolocation is available */
@@ -18,7 +22,7 @@ $(document).ready(function() {
           let url = "https://fcc-weather-api.glitch.me/api/current?lat=" + latitude + "&lon=" + longitude;
           $.getJSON(url, function(data) {
             console.log(data);
-            weather = data.weather[0].main;
+            weather = data.weather[0].description;
             temperature = data.main.temp;
             humidity = data.main.humidity;
             city = data.name;
@@ -30,11 +34,33 @@ $(document).ready(function() {
             cityDisplay.textContent = city;
             weatherDisplay.textContent = "WEATHER: " + weather + ", TEMPERATURE: " + temperature + "°C, HUMIDITY: " + humidity + "%";
             iconDisplay.setAttribute("src", iconUrl);
+
+            let temperatureFahrenheit = temperature * 1.8 + 32; 
+            function convertTemperature() {
+              switch(isFahrenheit) {
+                case false:
+                weatherDisplay.textContent = "WEATHER: " + weather + ", TEMPERATURE: " + temperatureFahrenheit + "°C, HUMIDITY: " + humidity + "%";
+                fahrenheitText.setAttribute("style", "color: #2196F3");
+                celsiusText.setAttribute("style", "color: #fff");
+                isFahrenheit = true;
+                break;
+                case true:
+                weatherDisplay.textContent = "WEATHER: " + weather + ", TEMPERATURE: " + temperature + "°C, HUMIDITY: " + humidity + "%";
+                celsiusText.setAttribute("style", "color: #2196F3");
+                fahrenheitText.setAttribute("style", "color: #fff");
+                isFahrenheit = false;
+                break;
+              };
+            };
+            fahrenheitToggle.addEventListener("change", convertTemperature);
+
         });
       });
   } 
   else {
       /* geolocation IS NOT available */
+      content.classList.add("fadein");
+      cityDisplay.textContent = "You need to allow acces to your location for this app to work.";
   }
 
 });
